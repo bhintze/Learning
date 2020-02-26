@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: pwd
       POSTGRES_DB: mydb
     volumes:
-      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+      - ./database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
     ports:
       - 5432:5432
   runenv:
@@ -18,6 +18,8 @@ services:
         - database
     volumes:
       - ./get_data.py:/work/get_data.py
-    command: bash -c "sleep infinity"
+      - ./insert_data.py:/work/insert_data.py
+    command: >
+      bash -c "sleep infinity"
 volumes:
   database-data: # named volumes can be managed easier using docker-compose
